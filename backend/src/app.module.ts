@@ -8,6 +8,7 @@ import { CommentsModule } from './comments/comments.module';
 import { ConfigModule } from '@nestjs/config';
 import { GenresModule } from './genres/genres.module';
 import { GradesModule } from './grades/grades.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { GradesModule } from './grades/grades.module';
     UsersModule,
     MoviesModule,
     CommentsModule,
+    AuthModule,
     GenresModule,
     GradesModule,
   ],
