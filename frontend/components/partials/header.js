@@ -9,7 +9,7 @@ export default function Header() {
         setIsOpen(!isOpen)
     }
   return (
-    <nav className = "flex flex-row justify-between px-10 py-4 bg-[#032541] text-white items-center" >
+    <nav className = "flex flex-row justify-between px-20 py-4 bg-[#032541] text-white items-center" >
         <div className = "flex space-x-10 items-center" >
             <Link href="/">
                 <a className = "text-xl text-blue-500">StreamInfo</a>

@@ -1,5 +1,5 @@
-import Header from './header'
-import Footer from './footer'
+import Header from './partials/header'
+import Footer from './partials/footer'
 import Head from 'next/head'
 
 
@@ -12,7 +12,7 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       < Header / >
-      <main>{children}</main>
+      <main className="px-20 py-5">{children}</main>
       <Footer />
     </>
   )
