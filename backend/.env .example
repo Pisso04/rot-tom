@@ -1,0 +1,4 @@
+#The movie database 
+API_KEY = 4d6447c6074b4efe387da7a6e07d8ebd
+API_BASE_URL = https://api.themoviedb.org/3/
+API_IMAGE_BASE_URL =  https://image.tmdb.org/t/p/
