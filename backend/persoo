@@ -1,0 +1,86 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  // @Post()
+  // create(@Body() createUserDto: CreateUserDto) {
+  //   return this.usersService.create(createUserDto);
+  // }
+
+
+  @Post()
+  addUser(
+    @Body ('name') name: string,
+    @Body ('age') number: number,
+    @Body ('surname') surname: string,
+    @Body ('email') email: string,
+  ): any {
+    const genId = this.usersService.inserUsert(name, age, surname, email);
+    return {Id : genId,}
+  }
+
+
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
+  }
+
+  @Get(':userId')
+  findOne(@Param('userId') userId: string) {
+    return this.usersService.findOne(+userId);
+  }
+
+  @Patch(':userId')
+  update(@Param('userId') userId: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+userId, updateUserDto);
+  }
+
+
+  @Put()
+  updateUser(
+    @Param ('userId') userId: string,
+    @Body ('name') name: string,
+    @Body ('age') number: number,
+    @Body ('surname') surname: string,
+    @Body ('email') email: string,
+  ) {
+    this.usersService.updateUser(userId, name, number, surname, email);
+    return null;
+  }
+
+
+  @Delete(':userId')
+  deleteUser(@Param('userId') userId: string) {
+    this.usersService.deleteUser(+userId);
+    return null;
+  }
+}
+function age(name: string, age: any, surname: string, email: string) {
+  throw new Error('Function not implemented.');
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+model.ts
+///////////////////////////////////////////////////////////////
+
+
+
+export class User {
+    constructor (
+        public id: string,
+        public name: string,
+        public age: number,
+        public surname: string,
+        public email: string, 
+    ) {}
+
+}

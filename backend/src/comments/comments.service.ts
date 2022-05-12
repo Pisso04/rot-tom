@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CommentDocument } from 'src/schemas/comment.schema';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { Comment } from 'src/schemas/comment.schema';
 
 @Injectable()
+
 export class CommentsService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
+
+  constructor(@InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+  ){}
+
+  async create(createCommentDto: CreateCommentDto) {
+    const createcomment = new this.commentModel(createCommentDto);
+     createcomment.save();
+     return createcomment;
   }
 
-  findAll() {
-    return `This action returns all comments`;
+  async findAll() {
+    return this.commentModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
+  async findOne(name: string) {
+    return this.commentModel.findOne({name});
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+  async update(name: string, updateCommentDto: UpdateCommentDto) {
+    return this.commentModel.updateOne({name}, {$set: {...UpdateCommentDto}});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async remove(name: string) {
+    return this.commentModel.deleteOne({ name });
   }
 }

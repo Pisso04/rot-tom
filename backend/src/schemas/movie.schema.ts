@@ -33,7 +33,7 @@ export class Movie {
   grades: Grade[];
   
   @Prop()
-  more: JSON;
+  more: string;
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);

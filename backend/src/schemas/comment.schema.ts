@@ -3,12 +3,25 @@ import { Document } from 'mongoose';
 import mongoose from 'mongoose';
 import { Movie } from './movie.schema';
 import { User } from './user.schema';
+
 export type CommentDocument = Comment & Document;
 
 @Schema()
 export class Comment {
   @Prop()
   content: string;
+
+  @Prop()
+  name: string;
+
+  @Prop()
+  comment: string;
+
+  @Prop()
+  age: number;
+
+  @Prop()
+  id: number;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true })
   movie: Movie;
