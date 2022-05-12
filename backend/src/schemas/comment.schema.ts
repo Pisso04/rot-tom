@@ -11,25 +11,13 @@ export class Comment {
   @Prop()
   content: string;
 
-  @Prop()
-  name: string;
-
-  @Prop()
-  comment: string;
-
-  @Prop()
-  age: number;
-
-  @Prop()
-  id: number;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: false })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true })
   movie: Movie;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   user: User;
 
-  @Prop()
+  @Prop({type:Date, default: new Date()})
   date: Date;
 }
 
