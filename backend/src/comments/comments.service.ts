@@ -23,15 +23,26 @@ export class CommentsService {
     return this.commentModel.find();
   }
 
-  async findOne(name: string) {
-    return this.commentModel.findOne({name});
+  async findOne(id: string) {
+    return this.commentModel.findOne({_id :id});
   }
 
-  async update(name: string, updateCommentDto: UpdateCommentDto) {
-    return this.commentModel.updateOne({name}, {$set: {...UpdateCommentDto}});
+  async update(id: string, updateCommentDto: UpdateCommentDto) {
+    return this.commentModel.updateOne({_id : id}, { $set: updateCommentDto });
+
+    // const { comment } = await this.findCommentById(id);
+    // if (updateCommentDto.title) {
+    //     comment.title = updateCommentDto.title;
+    // }
+    // if (updateCommentDto.body) {
+    //     comment.body = updateCommentDto.body;
+    // }
+    // await comment.save();
+    // return { comment };
+
   }
 
-  async remove(name: string) {
-    return this.commentModel.deleteOne({ name });
+  async remove(id: string) {
+    return this.commentModel.deleteOne({ _id : id });
   }
 }

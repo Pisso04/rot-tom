@@ -17,20 +17,21 @@ export class CommentsController {
     return this.commentsService.findAll();
   }
 
-  // @Get(':name')
-  // findOne(@Param('name') name: string) {
-  //   return this.commentsService.findOne(name);
-  // }
 
-
-  @Put(':name')
-  update(@Param('name') name: string, @Body() updateCommentDto: UpdateCommentDto) {
-    return this.commentsService.update(name, updateCommentDto);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.commentsService.findOne(id);
   }
 
 
-  @Delete(':name')
-  remove(@Param('name') name: string) {
-    return this.commentsService.remove(name);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
+    return this.commentsService.update(id, updateCommentDto);
+  }
+
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.commentsService.remove(id);
   }
 }

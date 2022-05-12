@@ -23,10 +23,10 @@ export class Comment {
   @Prop()
   id: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: false })
   movie: Movie;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false })
   user: User;
 
   @Prop()
