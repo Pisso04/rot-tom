@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import mongoose from 'mongoose';
 import { Movie } from './movie.schema';
 
-export type CatDocument = User & Document;
+export type UserDocument = User & Document;
 
 @Schema()
 export class User {

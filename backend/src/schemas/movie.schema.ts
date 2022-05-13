@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import mongoose from 'mongoose';
 import { Grade } from './grade.schema';
-
-export type CatDocument = Movie & Document;
+import { Genre } from './genre.schema';
+export type MovieDocument = Movie & Document;
 
 
 @Schema()
@@ -14,8 +14,8 @@ export class Movie {
   @Prop()
   release_date: Date;
 
-  @Prop()
-  genres: string;
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Genre' }] })
+  genres: Genre[];
 
   @Prop()
   director: string;
@@ -31,9 +31,10 @@ export class Movie {
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Grade' }] })
   grades: Grade[];
-  
-  @Prop()
+
+  @Prop({ type: JSON })
   more: JSON;
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);
+

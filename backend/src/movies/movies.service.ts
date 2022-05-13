@@ -1,26 +1,47 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Movie, MovieDocument } from 'src/schemas/movie.schema';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class MoviesService {
-  create(createMovieDto: CreateMovieDto) {
-    return 'This action adds a new movie';
+  constructor(
+    @InjectModel(Movie.name) private movieModel: Model<MovieDocument>,
+  ) {}
+
+  async create(createMovieDto: CreateMovieDto) {
+    const createdMovie = new this.movieModel(createMovieDto);
+    return createdMovie.save();
   }
 
-  findAll() {
-    return `This action returns all movies`;
+  async findAll(): Promise<Movie[]> {
+    return await this.movieModel
+      .find()
+      .select('-__v')
+      .exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} movie`;
+  async findOne(id: string) {
+    return await this.movieModel
+      .findById(id)
+      .select('-__v')
+      .exec();
   }
 
-  update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
+  async find(updateMovieDto: UpdateMovieDto) {
+    return await this.movieModel.findOne(updateMovieDto).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} movie`;
+  async update(id: string, updateMovieDto: UpdateMovieDto) {
+    console.log(updateMovieDto);
+    return await this.movieModel
+      .findByIdAndUpdate(id, updateMovieDto, { new: true })
+      .select('-__v');
+  }
+
+  async remove(id: string) {
+    return await this.movieModel.findByIdAndRemove(id).select('-__v');
   }
 }

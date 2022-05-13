@@ -5,9 +5,15 @@ export type GenreDocument = Genre & Document;
 
 @Schema()
 export class Genre {
-  @Prop()
+  @Prop({
+    required: [true, 'Genre tmdb_id is required'],
+    unique: [true, 'Genre already exist'],
+  })
   tmdb_id: Number;
-  @Prop()
+  @Prop({
+    required: [true, 'Genre name is required'],
+    unique: [true, 'Genre already exist'],
+  })
   name: string;
 }
 
