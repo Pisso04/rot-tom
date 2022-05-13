@@ -91,6 +91,31 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+        <div className = "inline-flex space-x-10 items-center" >
+            <Link href="/login">
+                <a>Login</a>
+            </Link>
+          
+            <div>
+                <div className="relative m-1 mr-2 w-8 h-8 text-lg relative flex cursor-pointer justify-center items-center rounded-full bg-blue-500 text-xl text-white uppercase">
+                    <FontAwesomeIcon  icon={faUser} onClick={toggleMenu}></FontAwesomeIcon>
+                </div>
+                <div
+                    className = {`absolute right-2 top-20 flex flex-col space-y-5 bg-white text-black text-md p-5 border rounded-lg border-gray-800 border-opacity-10 w-40 ${isOpen ?'block':'hidden'}`} >
+                        <Link href="/login">
+                            <a className="hover:bg-gray-400 hover:text-white hover:p-2">My profile</a>
+                        </Link>
+                        <Link href="/favorites">
+                            <a className="hover:bg-gray-400 hover:text-white hover:p-2">My Favorites</a>
+                        </Link>
+                        <Link href="/watchlist">
+                            <a className="hover:bg-gray-400 hover:text-white hover:p-2">My Watchlist</a>
+                        </Link>
+                        <a className="hover:bg-gray-400 hover:text-white hover:p-2">Logout</a>
+                </div>
+            </div>
+        </div>
     </nav>
   );
 }
