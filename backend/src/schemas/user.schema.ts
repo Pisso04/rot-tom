@@ -55,7 +55,6 @@ export class User {
     type: Date,
     default: new Date(),
   })
-  
   updated_at: Date;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }] })

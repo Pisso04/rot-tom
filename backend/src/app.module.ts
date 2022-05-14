@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GenresModule } from './genres/genres.module';
 import { GradesModule } from './grades/grades.module';
 import { DirectorsModule } from './directors/directors.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DirectorsModule } from './directors/directors.module';
     UsersModule,
     MoviesModule,
     CommentsModule,
+    AuthModule,
     GenresModule,
     GradesModule,
     DirectorsModule,
