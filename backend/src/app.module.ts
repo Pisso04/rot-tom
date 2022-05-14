@@ -10,6 +10,7 @@ import { GenresModule } from './genres/genres.module';
 import { GradesModule } from './grades/grades.module';
 import { DirectorsModule } from './directors/directors.module';
 import { AuthModule } from './auth/auth.module';
+import { StatistiqueModule } from './statistique/statistique.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     GenresModule,
     GradesModule,
     DirectorsModule,
+    StatistiqueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

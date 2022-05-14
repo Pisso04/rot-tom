@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
+import { Movie } from 'src/movies/entities/movie.entity';
 
 @Injectable()
 export class UsersService {
@@ -85,16 +86,22 @@ export class UsersService {
     return user;
   }
 
-  // async addFavorite(user: User, movie: Movie) {
-   
-  //   var index = user.favorites.indexOf(movie._id);
-  //   if (index !== -1) {
-  //     user.favorites.splice(index, 1);
-  //   } else {
-  //     user.favorites.push(movie);
-  //   }
-  //   await user.save();
+  async getStats() {
+    return await this.userModel.countDocuments().exec();
+  }
 
-  //   return user;
+  // async addFavorite(id: string, movie: Movie) {
+  //   const user = this.findOne(id);
+  //   if (user) {
+  //     var index = user.favorites.indexOf(movie._id);
+  //     if (index !== -1) {
+  //       user.favorites.splice(index, 1);
+  //     } else {
+  //       user.favorites.push(movie);
+  //     }
+  //     await user.save();
+
+  //     return user;
+  //   }
   // }
 }

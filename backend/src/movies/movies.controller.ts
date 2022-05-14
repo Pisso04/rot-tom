@@ -14,6 +14,7 @@ export class MoviesController {
     private readonly configService: ConfigService,
     private readonly genresService: GenresService,
     private readonly directorsService: DirectorsService,
+    // private readonly usersService: UsersService,
   ) {}
 
   @Post()
@@ -56,18 +57,18 @@ export class MoviesController {
           name: res.data.production_companies[0].name,
         });
         if (director_exist) {
-            director = director_exist
+          director = director_exist;
         } else {
           director = await this.directorsService.create({
-                tmdb_id: res.data.production_companies[0].id,
-              name: res.data.production_companies[0].name,
-            });
+            tmdb_id: res.data.production_companies[0].id,
+            name: res.data.production_companies[0].name,
+          });
         }
         const createMovieDto = new CreateMovieDto();
         createMovieDto.tmdb_id = createMovieInputDto.tmdb_id;
         createMovieDto.release_date = res.data.release_date;
         createMovieDto.genres = genres;
-        createMovieDto.director = director
+        createMovieDto.director = director;
         createMovieDto.title = res.data.title;
         createMovieDto.overview = res.data.overview;
         createMovieDto.image = res.data.backdrop_path;

@@ -15,9 +15,13 @@ import * as bcrypt from 'bcrypt';
 import { ChangeUserPassword } from './dto/change-user-password';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+import { MoviesService } from '../movies/movies.service';
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly moviesService: MoviesService,
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -146,12 +150,11 @@ export class UsersController {
   }
 
   // async addFavorite(id: string, movie: string) {
-  //   const user = await this.usersService.findOne(id);
-  //   if (user) {
+
   //     const movie = await this.moviesService.findOne(movie);
   //     if (movie) {
-  //       return this.usersService.addFavorite(user, movie);
+  //       return this.usersService.addFavorite(id, movie);
   //     }
-  //   }
+
   // }
 }
