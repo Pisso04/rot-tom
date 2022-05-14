@@ -7,11 +7,7 @@ import Cookies from "universal-cookie";
 
 export default function Header() {
   const cookies = new Cookies();
-  let user = "Found";
-  if (cookies.get("access") === undefined) {
-    user = "notFound";
-    console.log("user", user);
-  }
+  let user = (cookies.get("access") === undefined) ? 'notFound' : 'Found'
 
   const [isOpen, setIsOpen] = useState(false);
   function toggleMenu() {
