@@ -1,4 +1,4 @@
 export class CreateGenreDto {
-  tmdb_id: number;
+  tmdb_id: Number;
   name: string;
 }

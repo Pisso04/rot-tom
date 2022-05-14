@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GenresModule } from './genres/genres.module';
 import { GradesModule } from './grades/grades.module';
 import { DirectorsModule } from './directors/directors.module';
+import { StatistiqueModule } from './statistique/statistique.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { DirectorsModule } from './directors/directors.module';
     GenresModule,
     GradesModule,
     DirectorsModule,
+    StatistiqueModule,
   ],
   controllers: [AppController],
   providers: [AppService],
