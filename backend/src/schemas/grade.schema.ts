@@ -14,9 +14,12 @@ export class Grade {
   movie: Movie;
 
   @Prop()
-  note: Number;
+  note: number;
 
-  @Prop()
+  @Prop({
+    type: Date,
+    default: new Date(),
+  })
   date: Date;
 }
 

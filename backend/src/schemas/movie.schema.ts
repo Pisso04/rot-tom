@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import mongoose from 'mongoose';
-import { Grade } from './grade.schema';
 import { Genre } from './genre.schema';
 export type MovieDocument = Movie & Document;
 
@@ -29,8 +28,10 @@ export class Movie {
   @Prop()
   image: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Grade' }] })
-  grades: Grade[];
+  @Prop({
+    default: 0
+  })
+  grade: number;
 
   @Prop({ type: JSON })
   more: JSON;

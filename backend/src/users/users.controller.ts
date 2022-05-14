@@ -31,4 +31,14 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
+  // async addFavorite(id: string, movie: string) {
+  //   const user = await this.usersService.findOne(id);
+  //   if (user) {
+  //     const movie = await this.moviesService.findOne(movie);
+  //     if (movie) {
+  //       return this.usersService.addFavorite(user, movie);
+  //     }
+  //   }
+  // }
 }

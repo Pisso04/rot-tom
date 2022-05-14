@@ -23,4 +23,17 @@ export class UsersService {
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
+
+  // async addFavorite(user: User, movie: Movie) {
+   
+  //   var index = user.favorites.indexOf(movie._id);
+  //   if (index !== -1) {
+  //     user.favorites.splice(index, 1);
+  //   } else {
+  //     user.favorites.push(movie);
+  //   }
+  //   await user.save();
+
+  //   return user;
+  // }
 }

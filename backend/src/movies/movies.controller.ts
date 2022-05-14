@@ -51,7 +51,7 @@ export class MoviesController {
         createMovieDto.image = res.data.backdrop_path;
         return {
           success: true,
-          data: this.moviesService.create(createMovieDto),
+          data: await this.moviesService.create(createMovieDto),
         };
       }
       else{

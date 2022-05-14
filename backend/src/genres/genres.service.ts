@@ -25,17 +25,17 @@ export class GenresService {
     return await this.genreModel.findOne(updateGenreDto).exec();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.genreModel.findById(id).exec();
   }
 
-  async update(id: number, updateGenreDto: UpdateGenreDto) {
+  async update(id: string, updateGenreDto: UpdateGenreDto) {
     return await this.genreModel.findByIdAndUpdate(id, updateGenreDto, {
       new: true,
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.genreModel.findByIdAndRemove(id).exec();
   }
 }
