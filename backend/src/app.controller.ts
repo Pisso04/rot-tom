@@ -10,6 +10,7 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   async login(@Request() req) {
+    console.log(req);
     const token = await this.authService.login(req.user);
     const access_token = token.access_token;
     // const user_id = req.user._doc._id;

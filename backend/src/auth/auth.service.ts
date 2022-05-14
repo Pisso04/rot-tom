@@ -25,7 +25,7 @@ export class AuthService {
       username: user._doc.username,
       id: user._doc._id.toString(),
       email: user._doc.email,
-      admin: user._doc.is_admin,
+      admin: user._doc.is_admin || user._doc.has_admin_privilege,
     };
     return {
       access_token: this.jwtService.sign(payload),
