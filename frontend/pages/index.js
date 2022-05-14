@@ -2,6 +2,14 @@
 // import Image from 'next/image'
 // import styles from '../styles/Home.module.css'
 
+import ReactStars from 'react-stars'
+
+import {DiscussionEmbed} from "disqus-react"
+
+import Comments from '../components/Comment'
+
+import React from 'react'
+
 
 import Nav from './Nav.js'
 import NavItem from './NavItem.js'
@@ -9,9 +17,11 @@ import List from './List.js'
 import ListItem from './ListItem.js'
 
 
+
 export default function Movies({ movies }) {
   return (
           <div>
+
             <form class="group relative">
               <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 -mt-2.5 text-slate-400 pointer-events-none group-focus-within:text-blue-500" aria-hidden="true">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
@@ -24,6 +34,16 @@ export default function Movies({ movies }) {
       
             <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
                 <blockquote>
+
+                  <div>
+                      <h2> Rate :  Star Ratings - '***Movies names here***' </h2>
+                        <ReactStars
+                        count={5}
+                        size={35}
+                        color2={'#ffd700'}
+                        />
+                  </div>
+
                   <p class="font-light ..."> Welcome to the next level. </p>
 
                   <h1 class="font-bold ..."> Synopsis </h1>
@@ -67,6 +87,21 @@ export default function Movies({ movies }) {
 
                 </figcaption>
 
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" OnClick="window.external.AddFavorite(location.href, document.title);">
+                  Button
+                </button>
+
+{/*                       
+                        <div>
+                          <DiscussionEmbed
+                          shortname={disqusShortname}
+                          config={disqusConfig}
+                          />
+                        </div> */}
+
+
+
+
                 {/* <div className="divide-y divide-slate-100">
                     <Nav>
                       <NavItem href="/new" isActive>New Releases</NavItem>
@@ -83,6 +118,51 @@ export default function Movies({ movies }) {
     </div>
     </figure>
     </div>
+
+                            <div class="flex">
+
+                                <div class="flex-initial w-15 ...">
+                                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                                        {/* <img class="w-full" src="https://images.pexels.com/photos/1674625/pexels-photo-1674625.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Sunset in the mountains"/> */}
+                                    <div class="px-3 py-2">
+
+                                    <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+                                    <p class="text-gray-700 text-base">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+                                    </p>
+                                    </div>
+                                    <div class="px-6 pt-4 pb-2">
+                                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                                    </div>
+                                </div>
+                            </div>
+                                      
+                                      
+
+                                        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                                          <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"/>
+                                          <div class="px-6 py-4">
+                                            <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+
+
+                                        <div>
+                                          <h1>Comments - *** This Movies ***** </h1>
+                                          <Comments/>
+                                        </div>
+                                            
+
+
+                                          </div>
+                                          <div class="px-6 pt-4 pb-2">
+
+                                            </div>
+                                        </div>
+
+
+                  </div>
+                
     </div>
 
   )
