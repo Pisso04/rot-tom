@@ -101,6 +101,11 @@ export class MoviesController {
     return { success: true, data: await this.moviesService.findAll() };
   }
 
+  @Get(':genre_id')
+  async findGenreConcerts(@Param('genre_id') genre_id: string){
+    return this.moviesService.getGenreMovies(genre_id)
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     if (!id.match(/^[0-9a-fA-F]{24}$/))

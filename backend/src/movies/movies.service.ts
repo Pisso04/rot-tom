@@ -126,5 +126,16 @@ export class MoviesService {
 
   async getOneStats(id: string) {
     return '';
+  async getGenreMovies(genre_id: string) {
+    const movies = [];
+    const allMovies = await this.movieModel.find().exec();
+    allMovies.forEach((x) => {
+      x.genres.forEach((y) => {
+        if (y.toString() == genre_id) {
+          movies.push(x);
+        }
+      });
+    });
+    return movies;
   }
 }
