@@ -5,11 +5,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
-import { Movie } from 'src/movies/entities/movie.entity';
+import { Movie } from 'src/schemas/movie.schema';
+import { MoviesService } from '../movies/movies.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private readonly moviesService: MoviesService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     return await new this.userModel({
@@ -90,18 +94,25 @@ export class UsersService {
     return await this.userModel.countDocuments().exec();
   }
 
-  // async addFavorite(id: string, movie: Movie) {
-  //   const user = this.findOne(id);
-  //   if (user) {
-  //     var index = user.favorites.indexOf(movie._id);
-  //     if (index !== -1) {
-  //       user.favorites.splice(index, 1);
-  //     } else {
-  //       user.favorites.push(movie);
-  //     }
-  //     await user.save();
-
-  //     return user;
-  //   }
-  // }
+  async addFavorite(id: string, movie_id: string) {
+    const user = await this.userModel.findById(id);
+    const movie = await this.moviesService.findOne(movie_id);
+    if (user) {
+      if (movie) {
+        var index = user.favorites.indexOf(movie._id);
+        console.log(index);
+        console.log(movie.id);
+        console.log(user.favorites);
+        if (index !== -1) {
+          user.favorites.splice(index, 1);
+        } else {
+          user.favorites.push(movie);
+        }
+        await user.save();
+        return { data: user, success: true };
+      }
+      return { error: 'Movie not found', success: false };
+    }
+    return { error: 'User not found', success: false };
+  }
 }
