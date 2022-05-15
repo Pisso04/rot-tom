@@ -3,10 +3,38 @@ import ReactStars from 'react-stars'
 
 import Comments from '../../components/Comment'
 
-import React from 'react'
+import axios from 'axios'
+
+import react, { useState, useEffect } from 'react'
+
 
 
 export default function Movies({ movies }) {
+
+    const [data, setData] = useState(null)
+    const [isLoading, setLoading] = useState(false)
+
+    // async function mov (){
+    //     const { data } = await axios.get("localhost:5000/comments");
+    //     const posts = data.slice(0, 10);
+    //     const paths = comments.map((post) => ({ params: { id: post.id.toString() } }));
+    // }
+
+    useEffect(() => {
+        setLoading(true)
+        fetch('http://127.0.0.1:5000/comments')
+          .then((res) => res.json())
+          .then((data) => {
+            setData(data)
+            console.log(data)
+            setLoading(false)
+          })
+      }, [])
+    
+      if (isLoading) return <p>Loading...</p>
+      if (!data) return <p>No profile data</p>
+
+
   return (
     <div>
 
@@ -122,6 +150,32 @@ export default function Movies({ movies }) {
 </form>
 
     </blockquote>
+
+
+    {data.map(function(d, idx){
+        
+    <figcaption className="font-medium">
+
+      <div className= "flex flex-col md:flex-row ">
+
+            <div className= "ok1">
+                <img width="25" height="25" src="https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png"/>
+            </div>
+            <div className= "ok2*****µµµµµµµµµ" > 
+                  <form action="*********" className="postion-left border flex items-center space-x-5">
+                    <p> User profile with picture </p>
+                    <textarea id="********" name="******" rows="2" cols="50"> </textarea>
+                  </form>
+            </div>
+      </div>
+
+    </figcaption>
+
+})}
+
+
+
+
     <figcaption className="font-medium">
 
       <div className= "flex flex-col md:flex-row ">
@@ -139,9 +193,11 @@ export default function Movies({ movies }) {
             </div>
       </div>
 
-
-    
          </figcaption>
+
+
+
+
 
          <figcaption className="font-medium">
 
@@ -161,26 +217,6 @@ export default function Movies({ movies }) {
       </div>
 
 
-    
-         </figcaption>
-
-
-         <figcaption className="font-medium">
-
-      <div className= "flex flex-col md:flex-row ">
-
-            <div className= "ok1">
-            <img width="25" height="25" src="https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png"/>
-
-            </div>
-            <div className= "ok2" > 
-
-                  <form action="*********" className="postion-left border flex items-center space-x-5">
-                    <p> User profile with picture </p>
-                    <textarea id="********" name="******" rows="2" cols="50"> </textarea>
-                  </form>
-            </div>
-      </div>
 
 
     
