@@ -1,7 +1,8 @@
-import Link from "next/link";
-import MoviesList from '../../../components/movies_list';
-export default function movies_dashboard() {
 
+import Link from "next/link";
+import TmdbMoviesList from '../../../components/tmdb_movies_list';
+export default function tmdb_movies_dashboard() {
+  
   return (
         <div className="my-10 flex items-center flex-col">
         <span className="text-gray-500 text-3xl lobster">
@@ -12,7 +13,7 @@ export default function movies_dashboard() {
             <Link href="/dashboard/movies"><a className="w-auto hover:border hover:border-blue-600 m-3 h-auto bg-gray-100 p-2 rounded-md shadow flex flex-col items-center justify-center">StreamBox Movies</a></Link>
         </div>
         <div className="mt-14 flex flex-col w-[95%]">
-            < MoviesList />
+            < TmdbMoviesList/>
         </div>
     </div>
 

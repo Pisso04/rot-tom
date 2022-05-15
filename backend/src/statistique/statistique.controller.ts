@@ -2,12 +2,14 @@ import { Controller, Get } from '@nestjs/common';
 import { MoviesService } from 'src/movies/movies.service';
 import { UsersService } from 'src/users/users.service';
 import { GenresService } from 'src/genres/genres.service';
+import { CommentsService } from 'src/comments/comments.service';
 
 @Controller('statistique')
 export class StatistiqueController {
   constructor(
     private readonly moviesService: MoviesService,
     private readonly genresService: GenresService,
+    private readonly commentsService: CommentsService,
     private readonly usersService: UsersService, // private readonly usersService: UsersService,
   ) {}
 
@@ -26,6 +28,8 @@ export class StatistiqueController {
     const data = {
       nbre_movies: await this.moviesService.getStats(),
       nbre_users: await this.usersService.getStats(),
+      nbre_genres: await this.genresService.getStats(),
+      nbre_comments: await this.commentsService.getStats(),
       movies_by_genres: movies_by_genres,
       movies_by_dates: this.moviesService.getStatsByDate(),
     };

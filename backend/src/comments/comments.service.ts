@@ -23,4 +23,8 @@ export class CommentsService {
   remove(id: number) {
     return `This action removes a #${id} comment`;
   }
+
+  async getStats() {
+    // return await this.userModel.countDocuments().exec();
+  }
 }

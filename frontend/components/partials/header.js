@@ -25,9 +25,6 @@ export default function Header() {
         <Link href="/favorites">
           <a>Favorites</a>
         </Link>
-        <Link href="/watchlist">
-          <a>Watchlist</a>
-        </Link>
         <Link href="/dashboard">
           <a>Dashboard</a>
         </Link>
