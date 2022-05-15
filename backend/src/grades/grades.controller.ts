@@ -55,8 +55,8 @@ export class GradesController {
       if (!movie)
         return { success: false, error: 'The movie is not found' };
 
-      // if (!(await this.usersService.findOne(createGradeDto.user)))
-      //   return { success: false, error: 'The user is not found' };
+      if (!(await this.usersService.findOne(createGradeDto.user)))
+        return { success: false, error: 'The user is not found' };
 
       return { success: true , movie:movie};
     } catch {

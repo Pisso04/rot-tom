@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import * as bcrypt from 'bcrypt';
 import { ChangeUserPassword } from './dto/change-user-password';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -149,13 +150,16 @@ export class UsersController {
     console.log({ id, ref });
     if (ref.id !== id) return this.usersService.remove(id);
   }
-
-  // async addFavorite(id: string, movie: string) {
-
-  //     const movie = await this.moviesService.findOne(movie);
-  //     if (movie) {
-  //       return this.usersService.addFavorite(id, movie);
-  //     }
-
-  // }
+  @Post('add_favorite')
+  async addFavorite(@Body() createFavoriteDto: CreateFavoriteDto) {
+    if ('movie_id' in createFavoriteDto && 'user_id' in createFavoriteDto){
+     
+      return await this.usersService.addFavorite(
+        createFavoriteDto.user_id,
+        createFavoriteDto.movie_id
+      );
+      
+    }
+    return { error: 'All fields is required', success: false };
+  }
 }
