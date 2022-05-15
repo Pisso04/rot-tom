@@ -100,16 +100,17 @@ export class UsersService {
     if (user) {
       if (movie) {
         var index = user.favorites.indexOf(movie._id);
-        console.log(index);
-        console.log(movie.id);
-        console.log(user.favorites);
         if (index !== -1) {
           user.favorites.splice(index, 1);
+          const msg = "remove"
+          await user.save();
+          return { data: user, msg: msg };
         } else {
           user.favorites.push(movie);
+          const msg = "add"
+          await user.save();
+          return { data: user, msg: msg };
         }
-        await user.save();
-        return { data: user, success: true };
       }
       return { error: 'Movie not found', success: false };
     }

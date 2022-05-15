@@ -100,6 +100,21 @@ export default function Moovies() {
     setResult(result);
   }
 
+  async function addToFavorites(user_id, movie_id){
+    await fetch("http://localhost:5000/movies/add_favorite", {
+      method: "POST",
+      header: "application/json",
+      body: JSON.stringify({
+        user_id: user_id ,
+        movie_id: movie_id
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+          
+      });
+  }
+
   function onClick(event) {
     toggleFilterMenu();
     getAllGenres();
@@ -143,7 +158,7 @@ export default function Moovies() {
                 {genres.map((genre) => (
                   <option
                     className="border rounded-2xl py-1 px-2 my-1 font-source"
-                    value={genre._id}
+                    value={genre.tmdb_id}
                     key={genre._id}
                   >
                     {genre.name}
@@ -215,16 +230,23 @@ export default function Moovies() {
         <div className="grid grid-cols-4 gap-8 justify-between mt-10">
           { !resultStatus ? 
               movies.map((movie) => (
-                <div className=" border relative rounded-lg shadow-2xl h-[26rem] w-52 mt-8 flex-col" key={movie._id}>
+                <div className=" border relative rounded-lg shadow-2xl h-[28rem] w-52 mt-8 flex-col" key={movie._id}>
                   <img
                     className="rounded-lg h-72 w-52"
                     src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${movie.image}`}
                   />
-                  <div className="flex-col items-center py-4 px-2 h-20">
+                  <div className="flex-col items-center py-4 px-2 h-32">
                     <div className="font-bold font-source ">{movie.title}</div>
                     <div className="font-source text-gray-600">
                       {formatDate(movie.release_date)}
                     </div>
+                    {
+                      movie.genres.map((genre) => (
+                        <div className="font-source text-gray-600 text-sm" key={genre._id}>
+                          <div>{genre.name}</div>
+                        </div>
+                      ))
+                    }
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
                     <FontAwesomeIcon className="text-gray-500" icon={faStar}></FontAwesomeIcon>
@@ -233,17 +255,24 @@ export default function Moovies() {
                   </div>
                 </div>
               )) :
-              result.map((result) => (
-                <div className=" border relative rounded-lg shadow-2xl h-[26rem] w-52 mt-8 flex-col" key={result._id}>
+              result.map((res) => (
+                <div className=" border relative rounded-lg shadow-2xl h-[26rem] w-52 mt-8 flex-col" key={res._id}>
                   <img
                     className="rounded-lg h-72 w-52"
-                    src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${result.image}`}
+                    src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${res.image}`}
                   />
-                  <div className="flex-col items-center py-4 px-2">
-                    <div className="font-bold font-source ">{result.title}</div>
+                  <div className="flex-col items-center py-4 px-2 h-32">
+                    <div className="font-bold font-source ">{res.title}</div>
                     <div className="font-source text-gray-600">
-                      {formatDate(result.release_date)}
+                      {formatDate(res.release_date)}
                     </div>
+                    {
+                      res.genres.map((genre) => (
+                        <div className="font-source text-gray-600 text-sm" key={genre._id}>
+                          {genre.name}
+                        </div>
+                      ))
+                    }
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
                     <FontAwesomeIcon className="text-gray-500" icon={faStar}></FontAwesomeIcon>
@@ -254,11 +283,6 @@ export default function Moovies() {
               ))
           }
         </div>
-        {/* <div>
-          <div className="border rounded-xl shadow-xl h-12 bg-[#032541] flex items-center justify-center my-6 font-source text-white text-2xl w-full">
-            See More
-          </div>
-        </div> */}
       </div>
     </div>
   );

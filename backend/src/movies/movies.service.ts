@@ -126,13 +126,15 @@ export class MoviesService {
 
   async getOneStats(id: string) {
     return '';
+  }
+  
   async getGenreMovies(genre_id: string) {
     const movies = [];
-    const allMovies = await this.movieModel.find().exec();
-    allMovies.forEach((x) => {
-      x.genres.forEach((y) => {
-        if (y.toString() == genre_id) {
-          movies.push(x);
+    const allMovies = await this.findAll();
+    allMovies.forEach((movie) => {
+      movie.genres.forEach((genre) => {
+        if (genre.tmdb_id.toString() == genre_id) {
+          movies.push(movie);
         }
       });
     });
@@ -141,10 +143,10 @@ export class MoviesService {
 
   async getDirectorMovies(director_id: string){
     const movies = [];
-    const allMovies = await this.movieModel.find().exec();
-    allMovies.forEach((x) => {
-      if(x.director.toString() == director_id){
-        movies.push(x)
+    const allMovies = await this.findAll();
+    allMovies.forEach((movie) => {
+      if(movie.director.toString() == director_id){
+        movies.push(movie)
       };
     })
     return movies;
