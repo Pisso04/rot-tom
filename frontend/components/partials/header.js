@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import getUsers from "../../services/getUser";
 import Cookies from "universal-cookie";
 
 export default function Header() {
   const cookies = new Cookies();
-  let user = cookies.get("access") === undefined ? "notFound" : "Found";
+  const [user, setUser] = useState("")
+  useEffect(() => {
+    setUser(cookies.get("access") === undefined ? "notFound" : "Found");
+  })
 
   const [isOpen, setIsOpen] = useState(false);
   function toggleMenu() {
@@ -28,7 +31,7 @@ export default function Header() {
         <Link href="/watchlist">
           <a>Watchlist</a>
         </Link>
-        <Link href="/dashboard">
+        <Link href="/dashboard/users">
           <a>Dashboard</a>
         </Link>
       </div>
@@ -65,7 +68,7 @@ export default function Header() {
               isOpen ? "block" : "hidden"
             }`}
           >
-            <Link href="/login">
+            <Link href="/profil">
               <a className="hover:bg-gray-400 hover:text-white hover:p-2">
                 My profile
               </a>

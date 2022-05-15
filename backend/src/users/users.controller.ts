@@ -145,8 +145,9 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string, @Body() ref: string) {
-    if (ref !== id) return this.usersService.remove(id);
+  remove(@Param('id') id: string, @Body() ref) {
+    console.log({ id, ref });
+    if (ref.id !== id) return this.usersService.remove(id);
   }
 
   // async addFavorite(id: string, movie: string) {
