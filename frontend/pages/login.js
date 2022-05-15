@@ -28,13 +28,13 @@ export default function login() {
     };
     try {
       await axios(config)
-        .catch(setErrors("Invalid credentials !!!"))
         .then((resp) =>
           cookies.set("access", resp.data.access_token, {
             path: "/",
             secure: true,
           })
-        );
+        )
+        .catch(setErrors("Invalid credentials !!!"));
       router.push("/");
     } catch {}
   }

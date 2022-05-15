@@ -71,7 +71,7 @@ export class MoviesController {
         createMovieDto.director = director;
         createMovieDto.title = res.data.title;
         createMovieDto.overview = res.data.overview;
-        createMovieDto.image = res.data.backdrop_path;
+        createMovieDto.image = res.data.poster_path;
         return {
           success: true,
           data: await this.moviesService.create(createMovieDto),
