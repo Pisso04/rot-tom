@@ -138,4 +138,15 @@ export class MoviesService {
     });
     return movies;
   }
+
+  async getDirectorMovies(director_id: string){
+    const movies = [];
+    const allMovies = await this.movieModel.find().exec();
+    allMovies.forEach((x) => {
+      if(x.director.toString() == director_id){
+        movies.push(x)
+      };
+    })
+    return movies;
+  }
 }
