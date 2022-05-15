@@ -56,6 +56,15 @@ export class UsersService {
     return this.userModel.findOne({ _id: id });
   }
 
+  async setadmin(id: string) {
+    await this.userModel
+      .findByIdAndUpdate(id, {
+        has_admin_privilege: true,
+      })
+      .exec();
+    return true;
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     await this.userModel
       .findByIdAndUpdate(id, {

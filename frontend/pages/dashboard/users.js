@@ -32,6 +32,19 @@ export default function users() {
     getUsers();
   }
 
+  async function setAdmin(e) {
+    // console.log(JwtDecode(cookie).id);
+    let config = {
+      method: "post",
+      url: "http://localhost:5000/users/admin/" + e.target.id,
+      headers: {
+        Authorization: "Bearer " + cookie,
+      }
+    };
+    await axios(config);
+    getUsers();
+  }
+
   async function getUsers() {
     let results = [];
     let config = {
@@ -67,6 +80,14 @@ export default function users() {
                   className="px-3 py-1 rounded bg-gray-800 text-white playfair"
                 >
                   Delete
+                </button>
+                <button
+                  onClick={setAdmin}
+                  hidden={data.is_admin || data.has_admin_privilege}
+                  id={data._id}
+                  className="px-3 py-1 rounded bg-gray-800 text-white playfair"
+                >
+                  set Admin
                 </button>
               </div>
             </div>

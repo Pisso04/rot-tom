@@ -65,6 +65,12 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post('admin/:id')
+  async setAdmin(@Param('id') id: string) {
+    return this.usersService.setadmin(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
@@ -152,13 +158,11 @@ export class UsersController {
   }
   @Post('add_favorite')
   async addFavorite(@Body() createFavoriteDto: CreateFavoriteDto) {
-    if ('movie_id' in createFavoriteDto && 'user_id' in createFavoriteDto){
-     
+    if ('movie_id' in createFavoriteDto && 'user_id' in createFavoriteDto) {
       return await this.usersService.addFavorite(
         createFavoriteDto.user_id,
-        createFavoriteDto.movie_id
+        createFavoriteDto.movie_id,
       );
-      
     }
     return { error: 'All fields is required', success: false };
   }
