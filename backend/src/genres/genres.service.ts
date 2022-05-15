@@ -38,4 +38,8 @@ export class GenresService {
   async remove(id: string) {
     return await this.genreModel.findByIdAndRemove(id).exec();
   }
+
+  async getStats() {
+    return await this.genreModel.countDocuments().exec();
+  }
 }
