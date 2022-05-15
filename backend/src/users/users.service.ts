@@ -33,6 +33,11 @@ export class UsersService {
     return this.userModel.findById(id);
   }
 
+  async findFavorites(id: string) {
+    const user = await this.userModel.findById(id).populate('favorites');
+    return user.favorites;
+  }
+
   async checkIfExist(query: any) {
     return await this.userModel.find(query).count();
   }

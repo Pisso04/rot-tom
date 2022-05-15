@@ -150,6 +150,7 @@ export class UsersController {
     console.log({ id, ref });
     if (ref.id !== id) return this.usersService.remove(id);
   }
+
   @Post('add_favorite')
   async addFavorite(@Body() createFavoriteDto: CreateFavoriteDto) {
     if ('movie_id' in createFavoriteDto && 'user_id' in createFavoriteDto){
@@ -161,5 +162,10 @@ export class UsersController {
       
     }
     return { error: 'All fields is required', success: false };
+  }
+
+  @Get('favorites/:id')
+  async getFavorites(@Param('id') id: string){
+    return this.usersService.findFavorites(id);
   }
 }

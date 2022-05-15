@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the 
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 
 export default function Moovies() {
   const [openFilter, setOpenFilter] = useState(false);
@@ -13,8 +16,11 @@ export default function Moovies() {
   const [directorValue, setDirectorValue] = useState("");
   const [search, setSearch] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [result, setResult] = useState([])
+  const [result, setResult] = useState([]);
+  const [no_result, setNoResult] = useState([])
   const [resultStatus, setResultStatus] = useState(false)
+  const [user, setUser] = useState({})
+  const [favorites, setFavorites] = useState([])
 
 
   function handleKeyword(e) {
@@ -89,31 +95,67 @@ export default function Moovies() {
 
   async function getByKeyword(e){
     e.preventDefault()
-    alert(keyword)
+    setResult([])
     const result = []
+    const no_result = []
     movies.forEach((x) => {
-      if(x.title.toString().includes(keyword) === true){
-        setResultStatus(true)
+      if(x.title.toString().toLowerCase().includes(keyword) === true){
+        alert("ok")
+        setResultStatus(false)
         result.push(x)
-      };
+        setResult(result)
+      }
+      else{
+        no_result.push("Nothing to display...")
+        setResultStatus(false)
+        setNoResult(no_result)
+      }
     })
-    setResult(result);
   }
 
-  async function addToFavorites(user_id, movie_id){
-    await fetch("http://localhost:5000/movies/add_favorite", {
-      method: "POST",
-      header: "application/json",
+  async function addToFavorites(u_id, mo_id){
+    await fetch("http://localhost:5000/users/add_favorite", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        user_id: user_id ,
-        movie_id: movie_id
+        user_id: u_id ,
+        movie_id: mo_id
       })
     })
       .then((response) => response.json())
       .then((data) => {
-          
+          console.log(data)
+          getUser()
       });
   }
+
+  async function getUser() {
+    const access = await cookies.get("access");
+    await fetch("http://localhost:5000/profile", {
+      headers: {
+        Authorization: "Bearer " + access,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+		  if (data.userId) {
+			fetch("http://localhost:5000/users/" + data.userId, {
+			headers: {
+				Authorization: "Bearer " + access,
+			},
+			})
+			.then((response) => response.json())
+			.then((data) => {
+        console.log(data)
+				setUser(data);
+        setFavorites(data.favorites)
+			});
+			}
+		});
+  	};
+
 
   function onClick(event) {
     toggleFilterMenu();
@@ -129,8 +171,14 @@ export default function Moovies() {
   useEffect(() => {
     if (genreValue == "") {
       getAllMovies();
+      if(cookies.get("access")){
+        getUser();
+      }
     } else {
       getGenreMovies(genreValue);
+      if(cookies.get("access")){
+        getUser();
+      }
     }
   }, [genreValue]);
 
@@ -222,20 +270,27 @@ export default function Moovies() {
               !search ? "background" : "bg-[#032541]"
             } ${!search ? "text-color" : "text-white"}`}
           >
-            <button className="font-source text-xl" onClick={getByKeyword}> Search </button>
+            <button className="font-source text-xl w-full" onClick={getByKeyword}> Search </button>
           </div>
         </div>
       </div>
       <div className="pl-8">
         <div className="grid grid-cols-4 gap-8 justify-between mt-10">
-          { !resultStatus ? 
+          { (no_result[0] == "Nothing to display..." && !resultStatus && result[0] == undefined)?
+              <div className="font-source text-3xl w-96 m-56 text-center">{no_result[0]}</div>
+              :
+          (result[0] == undefined && !resultStatus) ? 
               movies.map((movie) => (
-                <div className=" border relative rounded-lg shadow-2xl h-[28rem] w-52 mt-8 flex-col" key={movie._id}>
+                <div className=" border relative rounded-lg shadow-2xl h-[30rem] w-52 mt-8 flex-col" key={movie._id}>
                   <img
-                    className="rounded-lg h-72 w-52"
+                    className="rounded-lg h-[19rem] w-52"
                     src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${movie.image}`}
                   />
-                  <div className="flex-col items-center py-4 px-2 h-32">
+                  <div className="flex-col items-center px-2 h-32">
+                    <div className="flex-row">
+                      <FontAwesomeIcon className="text-[#032541]" icon={faStar}></FontAwesomeIcon>
+                      <span className="font-bold ml-1">{movie.grade}.0</span>
+                    </div>
                     <div className="font-bold font-source ">{movie.title}</div>
                     <div className="font-source text-gray-600">
                       {formatDate(movie.release_date)}
@@ -249,16 +304,15 @@ export default function Moovies() {
                     }
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
-                    <FontAwesomeIcon className="text-gray-500" icon={faStar}></FontAwesomeIcon>
-                    <FontAwesomeIcon className="text-gray-500" icon={faHeart}></FontAwesomeIcon>
-                    <FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon>
+                    <button onClick={() => addToFavorites(user._id, movie._id)}><FontAwesomeIcon className={`${favorites.indexOf(movie._id.toString()) > -1 ? "text-[#032541]" : "text-gray-500"}`} icon={faHeart}></FontAwesomeIcon></button>
+                    <button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button>
                   </div>
                 </div>
-              )) :
+              )) : 
               result.map((res) => (
-                <div className=" border relative rounded-lg shadow-2xl h-[26rem] w-52 mt-8 flex-col" key={res._id}>
+                <div className=" border relative rounded-lg shadow-2xl h-[30rem] w-52 mt-8 flex-col" key={res._id}>
                   <img
-                    className="rounded-lg h-72 w-52"
+                    className="rounded-lg h-[19rem] w-52"
                     src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${res.image}`}
                   />
                   <div className="flex-col items-center py-4 px-2 h-32">
@@ -275,9 +329,8 @@ export default function Moovies() {
                     }
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
-                    <FontAwesomeIcon className="text-gray-500" icon={faStar}></FontAwesomeIcon>
-                    <FontAwesomeIcon className="text-gray-500" icon={faHeart}></FontAwesomeIcon>
-                    <FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon>
+                    <button onClick={() => addToFavorites(user._id, res._id)}><FontAwesomeIcon className={`${favorites.indexOf(res._id.toString()) > -1 ? "text-[#032541]" : "text-gray-500"}`} icon={faHeart}></FontAwesomeIcon></button>
+                    <button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button>
                   </div>
                 </div>
               ))
