@@ -18,12 +18,11 @@ export default function Moovies() {
   const [favorites, setFavorites] = useState([])
 
 
-  async function getAllMovies() {
-    await fetch("http://localhost:5000/favorites/" + user._id)
+  async function getAllMovies(id) {
+    await fetch("http://localhost:5000/users/favorites/" + id)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        setMovies(data.data);
+        setMovies(data);
       });
   }
 
@@ -62,7 +61,8 @@ export default function Moovies() {
 			.then((response) => response.json())
 			.then((data) => {
 				setUser(data);
-        setFavorites(data.favorites)
+                setFavorites(data.favorites)
+                getAllMovies(data._id)
 			});
 			}
 		});
@@ -74,12 +74,7 @@ export default function Moovies() {
   }
 
   useEffect(() => {
-    ()=>{
-      getAllMovies();
-      if(cookies.get("access")){
         getUser();
-      }
-    }
   }, []);
 
   return (
@@ -112,7 +107,7 @@ export default function Moovies() {
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
                     <button onClick={() => addToFavorites(user._id, movie._id)}><FontAwesomeIcon className={`${favorites.indexOf(movie._id.toString()) > -1 ? "text-[#032541]" : "text-gray-500"}`} icon={faHeart}></FontAwesomeIcon></button>
-                    <button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button>
+                    <a  href={"/movies/" + movie._id}><button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button></a>
                   </div>
                 </div>
             ))    
