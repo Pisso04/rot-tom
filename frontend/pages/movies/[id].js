@@ -15,14 +15,29 @@ const cookieUser = JwtDecode(cookie);
 
 export default function Comments() {
   const router = useRouter()
-  const { id, from } = router.query
-  const [user] = useState("627fe5e93ea4d71b43bd921f")
+  const { id } = router.query
+  const [user, setUser] = useState(null)
   const [note, setNote] = useState(null)
-  const [grade, setGrade] = useState(null)
+  const [grade, setGrade] = useState(0)
   const [comments, setComments] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [content, setContent] = useState(null)
   const [movie, setMovie] = useState(null)
+
+  async function getUser() {
+    let res = [];
+    let config = {
+      method: "get",
+      url: "http://localhost:5000/users/" + cookieUser.id,
+      headers: {
+        Authorization: "Bearer " + cookie,
+      },
+    };
+    await axios(config).then((response) => {
+      res = response.data;
+    });
+    setUser(res._id);
+  }
 
 
    async function get_comments(id) {
@@ -42,10 +57,12 @@ export default function Comments() {
    }
 
   async function get_grade(id) {
+    console.log(user)
      const options = {
        method: 'GET',
        url: process.env.NEXT_PUBLIC_API_BASE_URL + "grades/" + user +"/"+id
      };
+     console.log(options)
      await axios.request(options).then((response) => {
        console.log(response.data)
        if (response.data.success) {
@@ -76,7 +93,9 @@ export default function Comments() {
   function content_change(event) {
     setContent(event.target.value)
   }
+
    async function grade_change(value) {
+     console.log(note)
      const options = {
         method: 'POST',
         url: process.env.NEXT_PUBLIC_API_BASE_URL + "grades/",
@@ -135,9 +154,10 @@ export default function Comments() {
    }
 
     useEffect(() => {
+      if (user === null) getUser();
       if (!router.isReady) return;
+        if (note === null) get_grade(id);
         get_movie(id)
-        get_grade(id)
         get_comments(id)
       }, [router.isReady ])
     
@@ -148,16 +168,12 @@ export default function Comments() {
     <div>
       <div>
         <figure className="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-          < img className = "w-45 h-45 md:w-70 md:h-auto md:rounded-none rounded-full mx-auto"
-          src = {
-            process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL + movie.image
-          }
-          />
+        
           < img src = {
             process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL + movie.image
           }
           alt = ""
-          className = "w-full h-full object-cover object-center rounded-2xl" / >
+          className = "w-96 h-96 object-cover object-center rounded-2xl" / >
           <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
               <blockquote>
                 <div className = "flex flex-row justify-between" >
@@ -222,9 +238,9 @@ export default function Comments() {
                   </div>
                 </div>
               </figcaption>
-              <button className="bg-blue-500 hover:bg-red-700 text-red font-bold py-2 px-4 rounded-full" OnClick="window.external.AddFavorite(location.href, document.title);">
+              {/* <button className="bg-blue-500 hover:bg-red-700 text-red font-bold py-2 px-4 rounded-full" OnClick="window.external.AddFavorite(location.href, document.title);">
               +♥
-              </button>                  
+              </button>                   */}
         </div>
       </figure>
     </div>
@@ -255,7 +271,7 @@ export default function Comments() {
               < div key = {comment._id}
                 class = "relative z-0 group flex flex-col lg:mx-7 pt-5" >
                 < div className = "absolute group-hover:inline-flex space-x-4 transition-opacity bg-opacity-0 group-hover:bg-opacity-80 duration-500 top-0 right-3 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none text-white hidden items-center justify-center" >
-                  { comment.user._id==="" ?
+                  { comment.user._id===user ?
                     <button onClick = {
                         (e) => delete_comment(e, comment._id)
                       }
