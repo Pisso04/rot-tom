@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import TmdbMoviesList from "../../../components/tmdb_movies_list";
+import JwtDecode from "../../../services/JwtDecode";
+
 export default function tmdb_movies_dashboard() {
   const cookies = new Cookies();
   const cookie = cookies.get("access");

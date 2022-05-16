@@ -4,12 +4,12 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 import getUsers from "../../services/getUser";
 import Cookies from "universal-cookie";
-import JwtDecode from "../../services/JwtDecode"
+import JwtDecode from "../../services/JwtDecode";
 
 export default function Header() {
   const cookies = new Cookies();
   const cookie = cookies.get("access");
-  const userCookie = JwtDecode(cookie)
+  // const userCookie = JwtDecode(cookie);
   const [user, setUser] = useState("");
   useEffect(() => {
     setUser(cookie === undefined ? "notFound" : "Found");
@@ -31,13 +31,9 @@ export default function Header() {
         <Link href="/favorites">
           <a>Favorites</a>
         </Link>
-        {userCookie.admin === true ? (
-          <Link href="/dashboard">
-            <a>Dashboard</a>
-          </Link>
-        ) : (
-          ""
-        )}
+        <Link href="/dashboard">
+          <a>Dashboard</a>
+        </Link>
       </div>
 
       <div className="inline-flex space-x-10 items-center">
@@ -88,9 +84,7 @@ export default function Header() {
               </a>
             </Link> */}
             <Link href="/logout">
-              <a className="hover:bg-gray-200 rounded-md px-5 py-2">
-                Logout
-              </a>
+              <a className="hover:bg-gray-200 rounded-md px-5 py-2">Logout</a>
             </Link>
           </div>
         </div>

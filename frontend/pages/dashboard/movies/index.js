@@ -2,6 +2,7 @@ import Link from "next/link";
 import MoviesList from '../../../components/movies_list';
 import Cookies from 'universal-cookie';
 import { useRouter } from "next/router";
+import JwtDecode from "../../../services/JwtDecode"
 
 export default function movies_dashboard() {
     const cookies = new Cookies();

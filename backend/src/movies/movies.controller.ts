@@ -32,6 +32,7 @@ export class MoviesController {
       const movie_exist = await this.moviesService.find({
         tmdb_id: res.data.id,
       });
+      console.log(movie_exist)
       if (!movie_exist) {
         const genres = [];
         for (var i = 0; i < res.data.genres.length; i++) {
