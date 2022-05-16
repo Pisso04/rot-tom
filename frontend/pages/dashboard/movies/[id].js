@@ -26,6 +26,12 @@ export default function show_movies_dashboard() {
     const [comments, setComments] = useState(null)
     if (user === null) getUser();
 
+  if (cookie === undefined) {
+    router.push("/");
+  } else {
+    const user = JwtDecode(cookie);
+    if (user.admin === false) router.push("/");
+  }
 
 
   async function getUser() {
@@ -139,21 +145,24 @@ export default function show_movies_dashboard() {
   async function update_movie(event, id) {
     event.preventDefault();
     const options = {
-      method: 'PATCH',
+      method: "PATCH",
       url: process.env.NEXT_PUBLIC_API_BASE_URL + "movies/" + id,
       data: {
-        title: title, 
-        overview:overview
-      }
+        title: title,
+        overview: overview,
+      },
     };
     await axios.request(options).then((response) => {
-      console.log(response.data)
-      if (response.data.success)  alert("Movie updated successfully") 
-      else alert(response.data.error)
+      console.log(response.data);
+      if (response.data.success) alert("Movie updated successfully");
+      else alert(response.data.error);
     });
   }
-  function title_change(event){
-    setTitle(event.target.value)
+  function title_change(event) {
+    setTitle(event.target.value);
+  }
+  function overview_change(event) {
+    setOverview(event.target.value);
   }
    function overview_change(event) {
      setOverview(event.target.value)
@@ -196,6 +205,12 @@ export default function show_movies_dashboard() {
           });
         }
   useEffect(() => {
+    if (cookie === undefined) {
+      router.push("/");
+    } else {
+      const user = JwtDecode(cookie);
+      if (user.admin === false) router.push("/");
+    }
     if (user === null) getUser();
     if (!router.isReady) return;
     if(from==="our" || from==="tmdb") get_movie(id)
@@ -207,9 +222,9 @@ export default function show_movies_dashboard() {
   }, [router.isReady])
 
 
-  if (isLoading) return <p > Loading... </p>
-  if (!movie) return <p > No Movie data </p>
-  
+  if (isLoading) return <p> Loading... </p>;
+  if (!movie) return <p> No Movie data </p>;
+
   return (
     <>
     {
@@ -395,6 +410,5 @@ export default function show_movies_dashboard() {
 
    
     </>
-    
-  )
+  );
 }

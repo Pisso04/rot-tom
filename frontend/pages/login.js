@@ -34,9 +34,10 @@ export default function login() {
             secure: true,
           })
         )
-        .catch(setErrors("Invalid credentials !!!"));
       router.push("/");
-    } catch {}
+    } catch {
+      setErrors("Invalid credentials !!!");
+    }
   }
 
   return (

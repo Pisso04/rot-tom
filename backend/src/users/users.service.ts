@@ -12,6 +12,7 @@ import { MoviesService } from '../movies/movies.service';
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Movie.name) private movieModel: Model<UserDocument>,
     private readonly moviesService: MoviesService,
   ) {}
 
@@ -34,7 +35,12 @@ export class UsersService {
   }
 
   async findFavorites(id: string) {
-    const user = await this.userModel.findById(id).populate('favorites');
+    const user = await this.userModel.findById(id).populate({
+        path: 'favorites',
+        populate: {
+          path: 'genres',
+        },
+      });
     return user.favorites;
   }
 
@@ -113,6 +119,7 @@ export class UsersService {
     const movie = await this.moviesService.findOne(movie_id);
     if (user) {
       if (movie) {
+        console.log(movie)
         var index = user.favorites.indexOf(movie._id);
         if (index !== -1) {
           user.favorites.splice(index, 1);

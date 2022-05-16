@@ -25,6 +25,7 @@ export class MoviesService {
   }
 
   async findOne(id: string) {
+    return await this.movieModel.findById(id).populate('genres').select('-__v').exec();
     return await this.movieModel
       .findById(id)
       .populate('director')
