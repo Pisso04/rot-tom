@@ -91,11 +91,11 @@ export default function TmdbMoviesList() {
                 {movie.overview}
               </div>
               <div className="text-gray-700 group-hover:block hidden transition-all ease-in-out duration-500 delay-500">
-                <a href={"/dashboard/movies/" + movie.id + "?from=tmdb"}>
+                {/* <a href={"/dashboard/movies/" + movie.id + "?from=tmdb"}>
                   <button className="w-full rounded-lg text-lg py-1 bg-orange-600 text-white playfair my-1">
                     See more
                   </button>
-                </a>
+                </a> */}
 
                 <form
                   action='<%= "/admin/concerts/delete/"+concert._id %>'
