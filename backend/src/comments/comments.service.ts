@@ -1,30 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Comment, CommentDocument } from 'src/schemas/comment.schema';
 @Injectable()
 export class CommentsService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
+  constructor(
+    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+  ) {}
+
+  async create(createCommentDto: CreateCommentDto) {
+    const createdGenre = new this.commentModel(createCommentDto);
+    return await createdGenre.save();
   }
 
-  findAll() {
-    return `This action returns all comments`;
+  async findAll(): Promise<Comment[]> {
+    return await this.commentModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
+  async findAllData(updateCommentDto: UpdateCommentDto) {
+    return await this.commentModel.find(updateCommentDto).populate('user').exec();
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+  async find(updateCommentDto: UpdateCommentDto) {
+    return await this.commentModel.findOne(updateCommentDto).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async findOne(id: string) {
+    return await this.commentModel.findById(id).exec();
+  }
+
+  async update(id: string, updateCommentDto: UpdateCommentDto) {
+    return await this.commentModel.findByIdAndUpdate(id, updateCommentDto, {
+      new: true,
+    });
+  }
+
+  async remove(id: string) {
+    return await this.commentModel.findByIdAndRemove(id).exec();
   }
 
   async getStats() {
-    // return await this.userModel.countDocuments().exec();
+    return await this.commentModel.countDocuments().exec();
   }
 }

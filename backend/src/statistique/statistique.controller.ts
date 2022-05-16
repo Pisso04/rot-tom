@@ -31,7 +31,6 @@ export class StatistiqueController {
       nbre_genres: await this.genresService.getStats(),
       nbre_comments: await this.commentsService.getStats(),
       movies_by_genres: movies_by_genres,
-      movies_by_dates: this.moviesService.getStatsByDate(),
     };
 
     return { success: true, data: data };

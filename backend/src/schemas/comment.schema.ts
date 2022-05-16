@@ -16,7 +16,10 @@ export class Comment {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   user: User;
 
-  @Prop()
+  @Prop({
+    type: Date,
+    default: new Date(),
+  })
   date: Date;
 }
 

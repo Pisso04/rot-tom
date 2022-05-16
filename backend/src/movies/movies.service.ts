@@ -25,7 +25,11 @@ export class MoviesService {
   }
 
   async findOne(id: string) {
-    return await this.movieModel.findById(id).select('-__v').exec();
+    return await this.movieModel
+      .findById(id)
+      .populate('director')
+      .populate('genres')
+      .exec();
   }
 
   async find(updateMovieDto: UpdateMovieDto) {
@@ -51,80 +55,4 @@ export class MoviesService {
     return await this.movieModel.countDocuments({ genres: genre_id }).exec();
   }
 
-  async getStatsByDate() {
-    let TODAY = '2000-01-01T23:59:59';
-    let YEAR_BEFORE = '1968-01-01T00:00:00';
-    let req = { params: { productId: 1 } };
-    const monthsArray = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return await this.movieModel
-      .aggregate([
-        {
-          $match: {
-            created_at: { $gte: YEAR_BEFORE, $lte: TODAY },
-          },
-        },
-        {
-          $group: {
-            _id: { year_month: { $substrCP: ['$created_at', 0, 7] } },
-            count: { $sum: 1 },
-          },
-        },
-        {
-          $sort: { '_id.year_month': 1 },
-        },
-        {
-          $project: {
-            _id: 0,
-            count: 1,
-            month_year: {
-              $concat: [
-                {
-                  $arrayElemAt: [
-                    monthsArray,
-                    {
-                      $subtract: [
-                        { $toInt: { $substrCP: ['$_id.year_month', 5, 2] } },
-                        1,
-                      ],
-                    },
-                  ],
-                },
-                '-',
-                { $substrCP: ['$_id.year_month', 0, 4] },
-              ],
-            },
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            data: { $push: { k: '$month_year', v: '$count' } },
-          },
-        },
-        {
-          $project: {
-            data: { $arrayToObject: '$data' },
-            _id: 0,
-          },
-        },
-      ])
-      .exec();
-  }
-
-  async getOneStats(id: string) {
-    return '';
-  }
 }
