@@ -3,10 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the 
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import {
+  useRouter
+} from "next/router";
+
 import Cookies from 'universal-cookie';
 
 
 export default function Moovies() {
+    const router = useRouter();
+
   const cookies = new Cookies();
   const cookie = cookies.get("access")
   if (cookie === undefined) {
