@@ -7,6 +7,10 @@ import React, {
     useState,
     useEffect
 } from 'react';
+import JwtDecode from "../../services/JwtDecode";
+import Cookies from 'universal-cookie';
+const cookie = new Cookies().get("access");
+const cookieUser = JwtDecode(cookie);
 
 
 export default function Comments() {

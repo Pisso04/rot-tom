@@ -4,6 +4,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'universal-cookie';
+
 const cookies = new Cookies();
 
 
@@ -185,7 +186,7 @@ export default function Moovies() {
   return (
     <div className="flex">
       <div className="mt-6 w-1/4">
-        <div className="font-source text-2xl">Most popular movies</div>
+        <div className="font-source text-2xl">Movies</div>
         <div className="w-72">
           <div className="border-2 mt-4 py-3 rounded-lg shadow-xl h-max-64 flex-col items-center space-y-1">
             <div className="pl-4 w-full font-source text-xl" onClick={onClick}>
@@ -305,7 +306,7 @@ export default function Moovies() {
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
                     <button onClick={() => addToFavorites(user._id, movie._id)}><FontAwesomeIcon className={`${favorites.indexOf(movie._id.toString()) > -1 ? "text-[#032541]" : "text-gray-500"}`} icon={faHeart}></FontAwesomeIcon></button>
-                    <button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button>
+                    <a  href={"/movies/" + movie._id}><button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button> </a>
                   </div>
                 </div>
               )) : 
@@ -330,7 +331,7 @@ export default function Moovies() {
                   </div>
                   <div className="flex justify-end space-x-3 pr-2 pt-2">
                     <button onClick={() => addToFavorites(user._id, res._id)}><FontAwesomeIcon className={`${favorites.indexOf(res._id.toString()) > -1 ? "text-[#032541]" : "text-gray-500"}`} icon={faHeart}></FontAwesomeIcon></button>
-                    <button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button>
+                    <a  href={"/movies/" + res._id}><button><FontAwesomeIcon className="text-gray-500" icon={faEye}></FontAwesomeIcon></button></a>
                   </div>
                 </div>
               ))

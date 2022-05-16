@@ -15,13 +15,9 @@
     "axios": "^0.27.2",
     "next": "12.1.6",
     "react": "18.1.0",
-<<<<<<< HEAD
     "react-dom": "18.1.0",
-    "react-stars": "^2.2.5"
-=======
-    "react-circular-progressbar": "^2.0.4",
-    "react-dom": "18.1.0"
->>>>>>> 7906b40f150eedddaed9c4b30c2a9877d4fdd1fd
+    "react-stars": "^2.2.5",
+    "react-circular-progressbar": "^2.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
