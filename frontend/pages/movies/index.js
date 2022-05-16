@@ -100,7 +100,6 @@ export default function Moovies() {
     const no_result = []
     movies.forEach((x) => {
       if(x.title.toString().toLowerCase().includes(keyword) === true){
-        alert("ok")
         setResultStatus(false)
         result.push(x)
         setResult(result)
@@ -126,7 +125,6 @@ export default function Moovies() {
     })
       .then((response) => response.json())
       .then((data) => {
-          console.log(data)
           getUser()
       });
   }
@@ -148,7 +146,6 @@ export default function Moovies() {
 			})
 			.then((response) => response.json())
 			.then((data) => {
-        console.log(data)
 				setUser(data);
         setFavorites(data.favorites)
 			});
@@ -244,10 +241,7 @@ export default function Moovies() {
             >
               <label className="font-source"> Date </label>
               <input
-                type="number"
-                placeholder="YYYY"
-                min="1900"
-                max="2022"
+                type="date"
                 className="border rounded-lg bg-gray-300 w-64 h-10"
               />
             </div>

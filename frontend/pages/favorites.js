@@ -13,12 +13,11 @@ export default function Moovies() {
   const [favorites, setFavorites] = useState([])
 
 
-  async function getAllMovies() {
-    await fetch("http://localhost:5000/favorites/" + user._id)
+  async function getAllMovies(id) {
+    await fetch("http://localhost:5000/users/favorites/" + id)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        setMovies(data.data);
+        setMovies(data);
       });
   }
 
@@ -57,7 +56,8 @@ export default function Moovies() {
 			.then((response) => response.json())
 			.then((data) => {
 				setUser(data);
-        setFavorites(data.favorites)
+                setFavorites(data.favorites)
+                getAllMovies(data._id)
 			});
 			}
 		});
@@ -69,12 +69,7 @@ export default function Moovies() {
   }
 
   useEffect(() => {
-    ()=>{
-      getAllMovies();
-      if(cookies.get("access")){
         getUser();
-      }
-    }
   }, []);
 
   return (

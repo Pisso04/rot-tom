@@ -170,6 +170,6 @@ export class UsersController {
 
   @Get('favorites/:id')
   async getFavorites(@Param('id') id: string){
-    return this.usersService.findFavorites(id);
+    return await this.usersService.findFavorites(id);
   }
 }
