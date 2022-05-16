@@ -5,7 +5,6 @@ import JwtDecode from "../../services/JwtDecode";
 import { useRouter } from "next/router";
 
 export default function dashboard() {
-      const router = useRouter();
 
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
