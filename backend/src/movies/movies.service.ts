@@ -54,5 +54,28 @@ export class MoviesService {
   async getStatsByGenre(genre_id: string) {
     return await this.movieModel.countDocuments({ genres: genre_id }).exec();
   }
+  
+  async getGenreMovies(genre_id: string) {
+    const movies = [];
+    const allMovies = await this.findAll();
+    allMovies.forEach((movie) => {
+      movie.genres.forEach((genre) => {
+        if (genre.tmdb_id.toString() == genre_id) {
+          movies.push(movie);
+        }
+      });
+    });
+    return movies;
+  }
 
+  async getDirectorMovies(director_id: string){
+    const movies = [];
+    const allMovies = await this.findAll();
+    allMovies.forEach((movie) => {
+      if(movie.director.toString() == director_id){
+        movies.push(movie)
+      };
+    })
+    return movies;
+  }
 }
