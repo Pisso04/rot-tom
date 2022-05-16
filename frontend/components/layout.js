@@ -7,11 +7,11 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>StreamBox</title>
         <meta name="description" content="Generated  streamInfo" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      < Header / >
+      < Header />
       <main className="px-20 py-5">{children}</main>
       <Footer />
     </>

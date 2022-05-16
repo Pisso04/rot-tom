@@ -3,16 +3,17 @@ import MoviesList from '../../../components/movies_list';
 import Cookies from 'universal-cookie';
 import { useRouter } from "next/router";
 
-const cookies = new Cookies();
 export default function movies_dashboard() {
+    const cookies = new Cookies();
+    const cookie = cookies.get("access");
     const router = useRouter();
 
-    // if (cookies.get("access") === undefined) {
-    //     router.push("/");
-    // } else {
-    //     const user = JwtDecode(cookies.get("access"))
-    //     if (user.admin === false) router.push("/")
-    // }
+    if (cookie === undefined) {
+      router.push("/");
+    } else {
+      const user = JwtDecode(cookie);
+      if (user.admin === false) router.push("/");
+    }
 
   return (
         <div className="my-10 flex items-center flex-col">

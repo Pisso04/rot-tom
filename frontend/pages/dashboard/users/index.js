@@ -69,7 +69,7 @@ export default function users() {
                 className="w-full h-full object-center object-cover rounded-t-xl"
               />
               <div className="absolute hidden group-hover:inline-flex space-x-2 right-2 bottom-2">
-                <Link href={"/dashboard/user/" + data._id}>
+                <Link href={"/dashboard/users/" + data._id}>
                   <a className="px-3 py-1 rounded bg-gray-800 text-white playfair">
                     Edit
                   </a>

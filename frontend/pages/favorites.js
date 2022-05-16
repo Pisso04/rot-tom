@@ -4,10 +4,15 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'universal-cookie';
-const cookies = new Cookies();
 
 
 export default function Moovies() {
+  const cookies = new Cookies();
+  const cookie = cookies.get("access")
+  if (cookie === undefined) {
+    router.push("/");
+  }
+
   const [movies, setMovies] = useState([])
   const [user, setUser] = useState({})
   const [favorites, setFavorites] = useState([])
