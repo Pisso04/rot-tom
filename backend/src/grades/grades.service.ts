@@ -38,4 +38,8 @@ export class GradesService {
   async remove(id: string): Promise<Grade> {
     return await this.gradeModel.findByIdAndRemove(id).populate('movie').exec();
   }
+
+  async getStatsByMovie(movie_id: string) {
+    return await this.gradeModel.countDocuments({ movie: movie_id }).exec();
+  }
 }

@@ -3,6 +3,9 @@ import React, {
     useState, useEffect
 } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+const cookie = new Cookies().get("access");
+const cookieUser = JwtDecode(cookie);
 
 export default function show_movies_dashboard() {
   const router = useRouter()

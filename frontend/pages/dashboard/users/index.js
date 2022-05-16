@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import axios from "axios";
-import JwtDecode from "../../services/JwtDecode";
+import JwtDecode from "../../../services/JwtDecode";
 import Link from "next/link";
 const cookies = new Cookies();
 const cookie = cookies.get("access");
