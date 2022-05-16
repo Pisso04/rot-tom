@@ -1,19 +1,19 @@
 import Link from "next/link";
 import MoviesList from '../../../components/movies_list';
 import Cookies from 'universal-cookie';
-import { useRouter } from "next/router";
+import Router from "next/router";
 import JwtDecode from "../../../services/JwtDecode"
 
 export default function movies_dashboard() {
     const cookies = new Cookies();
+    // const router = useRouter();
     const cookie = cookies.get("access");
-    const router = useRouter();
 
     if (cookie === undefined) {
-      router.push("/");
+      Router.push("/");
     } else {
       const user = JwtDecode(cookie);
-      if (user.admin === false) router.push("/");
+      if (user.admin === false) Router.push("/");
     }
 
   return (

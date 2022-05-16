@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Cookies from "universal-cookie";
 import JwtDecode from "../../services/JwtDecode";
+import { useRouter } from "next/router";
 
 export default function dashboard() {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const router = useRouter()
   const cookies = new Cookies()
   const cookie = cookies.get("access")
 
